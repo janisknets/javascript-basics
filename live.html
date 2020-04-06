@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <script>
+            const MAX_CLICK = 100;
+            function clickMe(element, click) {
+                const currentPosition = element.style.top.replace('px','');
+                //this is called when a parent is clicked.
+                console.log("I clicked on the white box :)", currentPosition);
+
+                // we want to move element by 10px lower;
+                element.style.top =  parseInt(currentPosition) + 10 + "px";
+                const exists = document.getElementById("falling");
+                if (exists) {
+                  loop(element, click, false)
+                }
+            }
+
+            function loop(element, click, userClick) {
+                console.log(userClick, click)
+                if (userClick === true && click !== 0) {
+                    element.remove();
+                    return;
+                }
+                let counter = 0;
+                console.log("hello from loop", click);
+                if ( click < MAX_CLICK) {
+                    setTimeout(function f(){
+                        click = click + 1;
+                        clickMe(element, click);
+                    }, 100);
+                }
+            }
+        </script>
+
+        <style>
+            .parent {
+                background-color: black;
+                height: 100vh;
+                width: 100vw;
+            }
+            #falling {
+                position: absolute;
+                top: 0px;
+                background-color: white;
+                width: 30px;
+                height: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="parent" >
+        </div>
+        <div id="falling" onclick="loop(this, 0, true)" style="top:0px;" >
+        </div>
+    </body>
+</html>
